@@ -59,7 +59,7 @@ const UseSociosDataGrid = () => {
           <IconButton aria-label="edit">
             <EditIcon color="warning" />
           </IconButton>
-          <IconButton onClick={()=>paymentHandler(params.row.id)} aria-label="payments">
+          <IconButton  onClick={() => paymentHandler(params.row.id)} aria-label="payments">
             <PaymentsIcon color="success" />
           </IconButton>
           <IconButton aria-label="delete">

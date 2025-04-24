@@ -1,18 +1,38 @@
 import { create, StateCreator } from "zustand";
+import toast from "react-hot-toast";
 
 interface CobranzaStore {
-    total: number;
-    setTotal: (total: number, medioPago: string) => void;
+    cobranzaPartida: boolean;
+    cobranzaUnaParte: boolean;
+
+
+    setCobranzaPartida: () => void;
+    closeCobranzaUnaParte: () => void;
+    openCobranzaPartidaValidada: (idActividad?: number) => void;
+    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?:string) => void;
+
 }
 
 const cobranzaStore: StateCreator<CobranzaStore> = (set) => ({
-    total: 0,
-    setTotal: (total: number, medioPago: string) => {
-        if (medioPago === "efectivo") {
-            set({ total: total * 0.9 });
-        } else {
-            set({ total });
-        }
+    cobranzaPartida: false,
+    cobranzaUnaParte: false,
+
+    setCobranzaPartida: () => {
+        set((state) => ({ cobranzaPartida: !state.cobranzaPartida }));
+    },
+    openCobranzaPartidaValidada: (idActividad?: number) => {
+
+        if (idActividad === 0 || idActividad === undefined) return toast.error("Seleccione La actividad a cobrar")
+
+
+        set({ cobranzaPartida: true });
+    },
+    closeCobranzaUnaParte: () => {
+        set((state) => ({ cobranzaUnaParte: !state.cobranzaUnaParte }));
+    },
+    openCobranzaUnaParteValidad: (idActividad?:number, medioPago?:string) => {
+        if(!idActividad || !medioPago) return toast.error("Seleccione la actividad y el medio de pago")
+        set({ cobranzaUnaParte: true });
     },
 });
 

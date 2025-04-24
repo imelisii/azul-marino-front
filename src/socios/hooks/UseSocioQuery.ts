@@ -8,6 +8,8 @@ export const UseSocioQuery = (id: number) => {
         queryFn: () => getSocioById(id),
         staleTime: 1000 * 60 * 5, 
         enabled: !!id,
+        retry: 1,
+        
 
     })
 

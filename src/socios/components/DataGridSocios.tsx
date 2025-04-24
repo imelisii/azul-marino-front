@@ -12,9 +12,15 @@ export default function DataGridSocios() {
 
   const { columns, sociosQuery } = UseSociosDataGrid()
 
-  sociosQuery.isLoading && <div>Loading...</div>;
-  sociosQuery.isError && <div>Error: {sociosQuery.error.message}</div>;
 
+  if( sociosQuery.isError) return <div>Error al cargar los socios</div>
+  if (sociosQuery.isLoading) return <div>Cargando...Socios</div>
+
+
+
+
+
+  
 
 
   return (

@@ -7,6 +7,7 @@ const UseActividades = () => {
         queryKey: ["actividades"],
         queryFn: getActividades,
         staleTime: 1000 * 60 * 12,
+        
 
     })
 
