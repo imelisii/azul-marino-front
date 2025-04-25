@@ -1,10 +1,8 @@
 
 import UseActividades from "../../acatividades/hooks/UseActividades"
 import { useSociosStore } from "../../store/socios-store"
-import { UseSocioQuery } from "../../socios/hooks/UseSocioQuery"
 import { UseActividadesStore } from "../../store/actividades-store";
 import useCobranzaQuery from "./useCobranzaQuery";
-
 import { useCobranzaStore } from "../../store/cobranza-store";
 import * as Yup from 'yup';
 import { GridColDef } from "@mui/x-data-grid";
@@ -40,7 +38,7 @@ const UseModalCobranza = () => {
     const setActividadSelected = UseActividadesStore(state => state.setActividadSelected)
     const setCobranzaPartial = useCobranzaStore(state => state.setCobranzaPartida)
 
-    const { socioQuery } = UseSocioQuery(socioSelected?.id!)
+   
     const { actividadesQuery } = UseActividades()
     const { cobranzaMutation } = useCobranzaQuery()
 
@@ -63,12 +61,13 @@ const UseModalCobranza = () => {
         paymentCloser,
 
         actividadSelected,
+        socioSelected,
         setActividadSelected,
         setCobranzaPartial,
         columnsHisotrial,
 
 
-        socioQuery,
+       
         actividadesQuery,
         cobranzaMutation,
 

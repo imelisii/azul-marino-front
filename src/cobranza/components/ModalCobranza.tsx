@@ -23,14 +23,14 @@ import ModalPagaParte from "./ModalPagaParte";
 
 
 export default function ModalCobranza() {
-  const { isPaymentOpened, paymentCloser, socioQuery, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial } = UseModalCobranza();
+  const { isPaymentOpened, paymentCloser, socioSelected, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial } = UseModalCobranza();
   const openCobranzaPartidaValidada = useCobranzaStore(state => state.openCobranzaPartidaValidada)
   const openCobranzaUnaParteValidad = useCobranzaStore(state => state.openCobranzaUnaParteValidad)
 
 
+  if(!socioSelected) return <div>No se selecciono un socio</div>
 
-  if (socioQuery.isError) return <div>Error al cargar el socio</div>
-  if (!socioQuery.isError && !socioQuery.data) return <div>El socio no existe</div>
+ 
 
 
 
@@ -56,7 +56,7 @@ export default function ModalCobranza() {
             validationSchema={validationSchema}
             onSubmit={(values) => {
               cobranzaMutation.mutate({
-                socioId: socioQuery.data?.id!,
+                socioId: socioSelected?.id!,
                 actividadId: actividadSelected?.id!,
                 metodoPago: values.metodoPago,
                 aCuentaDe: values.aCuentaDe,
@@ -79,7 +79,7 @@ export default function ModalCobranza() {
 
               return (
                 <Form>
-                  <DialogTitle>Cobrar a Socio: {`${socioQuery.data?.nombre}  ${socioQuery.data?.apellido}`}</DialogTitle>
+                  <DialogTitle>Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido}`}</DialogTitle>
                   <DialogContent dividers>
                     <FormControl fullWidth margin="normal">
                       <InputLabel id="actividad-label">Actividad</InputLabel>
@@ -156,7 +156,7 @@ export default function ModalCobranza() {
                         as={TextField}
                         name="monto"
                         type="number"
-                        label={`El socio ${socioQuery.data.nombre} paga:`}
+                        label={`El socio ${socioSelected.nombre} paga:`}
                         value={values.monto}
 
                       >
@@ -172,10 +172,10 @@ export default function ModalCobranza() {
                       <Button color="success" variant="contained" type="submit">
                         Cobrar
                       </Button>
-                      <Button onClick={() => openCobranzaPartidaValidada(actividadSelected?.id ?? undefined)} size="large" variant="contained" color="info" >
+                      <Button onClick={() => openCobranzaPartidaValidada(actividadSelected?.id!)} size="large" variant="contained" color="info" >
                         Paga en 2 partes
                       </Button>
-                      <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected?.id ?? undefined, values.metodoPago ?? undefined)} size="large" variant="contained" color="warning" >
+                      <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected?.id!, values.metodoPago ?? undefined)} size="large" variant="contained" color="warning" >
                         Paga una parte
                       </Button>
                       <Button size="large" variant="contained" color="error" >
@@ -186,7 +186,7 @@ export default function ModalCobranza() {
                     </Grid>
 
                   </DialogActions>
-                  <ModalPagoPartes socio={socioQuery.data} />
+                  <ModalPagoPartes socio={socioSelected} />
                   <ModalPagaParte />
                 </Form>
               )
