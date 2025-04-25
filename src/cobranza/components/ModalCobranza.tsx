@@ -25,38 +25,20 @@ import ModalNoPagaNada from "./ModalNoPagaNada";
 
 
 export default function ModalCobranza() {
-  const { isPaymentOpened, paymentCloser, socioSelected, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial } = UseModalCobranza();
+  const { isPaymentOpened, paymentCloser, socioSelected, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial, socioQuery, initialValues } = UseModalCobranza();
   const openCobranzaPartidaValidada = useCobranzaStore(state => state.openCobranzaPartidaValidada)
   const openCobranzaUnaParteValidad = useCobranzaStore(state => state.openCobranzaUnaParteValidad)
   const openCobranzaNoPagaNada = useCobranzaStore(state => state.openCobranzaNoPagaNada)
 
 
-  if (!socioSelected) return <div>No se selecciono un socio</div>
-
-
-
+  if (!socioSelected) return null
 
 
   return (
-
-
-
-
-
-
-    <Dialog open={isPaymentOpened} fullScreen maxWidth="xl" fullWidth>
+    <Dialog open={isPaymentOpened} fullScreen maxWidth="xl">
       <Grid container spacing={2} columns={12}>
         <Grid size={6}>
-          <Formik
-            initialValues={{
-              actividad: '',
-              metodoPago: '',
-              aCuentaDe: '',
-              monto: 0,
-
-            }}
-
-            validationSchema={validationSchema}
+          <Formik initialValues={initialValues} validationSchema={validationSchema}
             onSubmit={(values) => {
               cobranzaMutation.mutate({
                 socioId: socioSelected?.id!,
@@ -67,18 +49,15 @@ export default function ModalCobranza() {
               });
             }}
           >
-            {({ values, handleChange, setFieldValue }) => {
+            {({ values, setFieldValue }) => {
               useEffect(() => {
                 if (actividadSelected && actividadesQuery.data) {
                   if (actividadSelected) {
-                    const nuevoPrecio = Number(actividadSelected.precio)
+                    const nuevoPrecio = actividadSelected.precio
                     setFieldValue("monto", nuevoPrecio);
                   }
                 }
               }, [actividadSelected, actividadesQuery.data]);
-
-
-
 
               return (
                 <Form>
@@ -91,7 +70,7 @@ export default function ModalCobranza() {
                         onClick={paymentCloser}
                         sx={{ mr: 2 }}
                       >
-                       Cerrar
+                        Cerrar
                       </Button>
                       <span>
                         Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido}`}
@@ -106,7 +85,6 @@ export default function ModalCobranza() {
                         labelId="actividad-label"
                         name="actividad"
                         value={values.actividad}
-                        onChange={handleChange}
                         label="Actividad"
                       >
                         {actividadesQuery.data?.map((actividad: Actividad) => (
@@ -125,7 +103,6 @@ export default function ModalCobranza() {
                         labelId="metodoPago-label"
                         name="metodoPago"
                         value={values.metodoPago}
-                        onChange={handleChange}
                         label="Método de Pago"
                       >
                         <MenuItem value="efectivo">Efectivo</MenuItem>
@@ -144,7 +121,6 @@ export default function ModalCobranza() {
                             labelId="aCuentaDe-label"
                             name="aCuentaDe"
                             value={values.aCuentaDe}
-                            onChange={handleChange}
                             label="A cuenta de"
                           >
                             <MenuItem value="anibal">Anibal</MenuItem>
@@ -176,9 +152,7 @@ export default function ModalCobranza() {
                         type="number"
                         label={`El socio ${socioSelected.nombre} paga:`}
                         value={values.monto}
-
                       >
-
                       </Field>
                       <ErrorMessage name="monto" component="div" className="text-red-500" />
                     </FormControl>
@@ -193,7 +167,7 @@ export default function ModalCobranza() {
                       <Button onClick={() => openCobranzaPartidaValidada(actividadSelected?.id!)} size="large" variant="contained" color="info" >
                         Paga en 2 partes
                       </Button>
-                      <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected?.id!, values.metodoPago ?? undefined)} size="large" variant="contained" color="warning" >
+                      <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected?.id!, values.metodoPago, values.aCuentaDe)} size="large" variant="contained" color="warning" >
                         Paga una parte
                       </Button>
 
@@ -206,7 +180,7 @@ export default function ModalCobranza() {
 
                   </DialogActions>
                   <ModalPagoPartes />
-                  <ModalPagaParte />
+                  <ModalPagaParte metodoPago={values.metodoPago} aCuentaDe={values.aCuentaDe} />
                   <ModalNoPagaNada />
                 </Form>
               )
@@ -220,7 +194,7 @@ export default function ModalCobranza() {
           <DialogTitle>Historial del socio</DialogTitle>
 
           <div style={{ height: "50vh", padding: 10, width: '100%' }}>
-            <DataGrid rows={[]} columns={columnsHisotrial} disableRowSelectionOnClick />
+            <DataGrid rows={socioQuery.data?.inscripciones} columns={columnsHisotrial} disableRowSelectionOnClick />
           </div>
         </Grid>
       </Grid>

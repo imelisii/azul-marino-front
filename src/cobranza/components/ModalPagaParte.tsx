@@ -12,16 +12,21 @@ import { Grid } from '@mui/material';
 
 
 
+interface Props {
+    metodoPago: string;
+    aCuentaDe?: string;
+}
 
 
-export default function ModalPagoPartes() {
-    const { isPagaUnaParte, closeCobranzaUnaParte, actividadSelected, initialValues, validationSchema, socioSelected } = usePagaParte();
+
+export default function ModalPagoPartes({ metodoPago, aCuentaDe }: Props) {
+    const { isPagaUnaParte, closeCobranzaUnaParte, actividadSelected, initialValues, validationSchema, socioSelected, cobranzaMutation } = usePagaParte();
 
     return (
         <>
             <Dialog
                 maxWidth="xl"
-                
+
                 open={isPagaUnaParte}
                 onClose={closeCobranzaUnaParte}
                 slotProps={{
@@ -32,7 +37,13 @@ export default function ModalPagoPartes() {
                     },
                 }}
             >
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => console.log(values)}>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values) => cobranzaMutation.mutate({
+                    socioId: socioSelected?.id!,
+                    actividadId: actividadSelected?.id!,
+                    metodoPago: metodoPago,
+                    aCuentaDe: aCuentaDe ?? "efectivo",
+                    monto: values.cuotaParte,
+                })}>
                     {({ values }) => (
                         <Form>
                             <DialogTitle>Cobrar una parte de la cuota {actividadSelected?.precio}</DialogTitle>
@@ -56,16 +67,16 @@ export default function ModalPagoPartes() {
                             </DialogContent>
                             <DialogActions>
                                 <Grid flex={1} container justifyContent={"space-between"} alignItems={"center"}>
-                                <Button variant="contained" onClick={closeCobranzaUnaParte}>
-                                    Cancelar
-                                </Button>
-                                <Button variant="contained" color="success" type="submit">
-                                    Cobrar
-                                </Button>
+                                    <Button variant="contained" onClick={closeCobranzaUnaParte}>
+                                        Cancelar
+                                    </Button>
+                                    <Button variant="contained" color="success" type="submit">
+                                        Cobrar
+                                    </Button>
 
-                                    
+
                                 </Grid>
-                               
+
                             </DialogActions>
                         </Form>
                     )}

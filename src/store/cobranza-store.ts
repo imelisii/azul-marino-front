@@ -1,5 +1,7 @@
 import { create, StateCreator } from "zustand";
 import toast from "react-hot-toast";
+import { useSociosStore } from "./socios-store";
+import { UseActividadesStore } from "./actividades-store";
 
 interface CobranzaStore {
     cobranzaPartida: boolean;
@@ -10,9 +12,10 @@ interface CobranzaStore {
     setCobranzaPartida: () => void;
     closeCobranzaUnaParte: () => void;
     openCobranzaPartidaValidada: (idActividad?: number) => void;
-    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?: string) => void;
+    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?: string, aCuentaDe?: string) => void;
     openCobranzaNoPagaNada: () => void;
     closeCobranzaNoPagaNada: () => void;
+    clearInfoPago:() => void;
 }
 
 const cobranzaStore: StateCreator<CobranzaStore> = (set) => ({
@@ -33,8 +36,11 @@ const cobranzaStore: StateCreator<CobranzaStore> = (set) => ({
     closeCobranzaUnaParte: () => {
         set((state) => ({ cobranzaUnaParte: !state.cobranzaUnaParte }));
     },
-    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?: string) => {
+    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?: string, aCuentaDe?: string) => {
         if (!idActividad || !medioPago) return toast.error("Seleccione la actividad y el medio de pago")
+        if (medioPago !== "efectivo" && !aCuentaDe) return toast.error("Si es Mercado Pago o Transferencia, debe selecionar a cuenta de quien es el pago")
+
+
         set({ cobranzaUnaParte: true });
     },
     openCobranzaNoPagaNada: () => {
@@ -43,6 +49,11 @@ const cobranzaStore: StateCreator<CobranzaStore> = (set) => ({
     closeCobranzaNoPagaNada: () => {
         set({ cobranzaNoPagaNada: false });
     },
+    clearInfoPago: () => {
+        useSociosStore.getState().clearSocioSelected()
+        UseActividadesStore.getState().clearActividadSelected()
+        set({ cobranzaPartida: false, cobranzaUnaParte: false, cobranzaNoPagaNada: false });
+    }
 });
 
 export const useCobranzaStore = create<CobranzaStore>(cobranzaStore);

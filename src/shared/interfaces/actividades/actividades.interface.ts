@@ -2,6 +2,6 @@ export interface Actividad {
         id: number;
         nombre: string;
         descripcion: string;
-        precio: string;
+        precio: number;
         activa: boolean;
 }

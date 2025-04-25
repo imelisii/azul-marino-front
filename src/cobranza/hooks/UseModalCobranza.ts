@@ -6,6 +6,19 @@ import useCobranzaQuery from "./useCobranzaQuery";
 import { useCobranzaStore } from "../../store/cobranza-store";
 import * as Yup from 'yup';
 import { GridColDef } from "@mui/x-data-grid";
+import { UseSocioQuery } from "../../socios/hooks/UseSocioQuery";
+import { InscripcionesDetail } from "../../shared/interfaces/socios/socio-detail.interface";
+
+
+
+const initialValues = {
+    actividad: '',
+    metodoPago: '',
+    aCuentaDe: '',
+    monto: 0,
+
+  }
+
 
 
 
@@ -23,11 +36,12 @@ const validationSchema = Yup.object({
     monto: Yup.number().min(1, "El monto debe ser mayor a 1").required('El monto es obligatorio')
 });
 
-const columnsHisotrial: GridColDef[] = [
+const columnsHisotrial: GridColDef<InscripcionesDetail>[] = [
     { field: 'fecha', headerName: 'Fecha', flex: 1 },
-    { field: 'actividad', headerName: 'Actividad', flex: 1 },
-    { field: 'metodo', headerName: 'Método de Pago', flex: 1 },
-    { field: 'monto', headerName: 'Monto', flex: 1, type: 'number' },
+    { field: 'nombre', headerName: 'Actividad', flex: 1 },
+    { field: 'descripcion', headerName: 'Descripción', flex: 1 },
+    { field: "monto", headerName: 'Monto', flex: 1 },
+
 ];
 
 
@@ -46,6 +60,7 @@ const UseModalCobranza = () => {
 
     const { actividadesQuery } = UseActividades()
     const { cobranzaMutation } = useCobranzaQuery("/cobros")
+    const { socioQuery } = UseSocioQuery(socioSelected?.id!)
 
 
     return {
@@ -58,11 +73,13 @@ const UseModalCobranza = () => {
         setActividadSelected,
         setCobranzaPartial,
         columnsHisotrial,
+        initialValues,
 
 
 
         actividadesQuery,
         cobranzaMutation,
+        socioQuery,
 
 
 

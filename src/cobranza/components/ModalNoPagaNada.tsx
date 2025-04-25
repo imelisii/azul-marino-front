@@ -5,14 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useCobranzaStore } from '../../store/cobranza-store';
 import { Grid } from '@mui/material';
+import useNoPagaNada from '../hooks/useNoPagaNada';
 
 export default function ModalNoPagaNada() {
 
-    const noPagaNada = useCobranzaStore(state => state.cobranzaNoPagaNada);
-    const openNoPagaNada = useCobranzaStore(state => state.openCobranzaNoPagaNada);
-    const closeNoPagaNada = useCobranzaStore(state => state.closeCobranzaNoPagaNada);
+    const { noPagaNada, openNoPagaNada, closeNoPagaNada, generarDeuda, actividad, socio, } = useNoPagaNada();
 
 
 
@@ -26,18 +24,18 @@ export default function ModalNoPagaNada() {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Use Google's location service?"}
+                    {socio?.nombre + " " + socio?.apellido + " - " + actividad?.nombre}
                 </DialogTitle>
-                <DialogContent>
+
+                <DialogContent dividers>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous
-                        location data to Google, even when no apps are running.
+                        <p className="text-xl">Esta seguro de generar deuda de <strong className='text-red-600'>${actividad?.precio}</strong> para el socio {socio?.nombre + " " + socio?.apellido} en la actividad {actividad?.nombre}?</p>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Grid flex={1} container justifyContent={"space-between"} alignItems={"center"}>
                         <Button onClick={closeNoPagaNada} variant='contained' color='error' autoFocus> Cancelar </Button>
-                        <Button onClick={openNoPagaNada} variant='contained' color='success'>Generar Deuda</Button>
+                        <Button onClick={() => generarDeuda()} variant='contained' color='success'>Generar Deuda</Button>
                     </Grid>
 
 

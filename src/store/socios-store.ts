@@ -15,6 +15,7 @@ interface SociosStore {
     deleteHandler: () => void;
     paymentHandler: (socio: Socio) => void;
     paymentColoser: () => void;
+    clearSocioSelected: () => void;
 
 
 }
@@ -34,6 +35,7 @@ const sociosStore: StateCreator<SociosStore> = (set) => ({
     deleteHandler: () => set((state) => ({ isDeleteOpened: !state.isDeleteOpened })),
     paymentHandler: (socio: Socio) => set((state) => ({ isPaymentOpened: !state.isPaymentOpened, socioSelected: socio })),
     paymentColoser: () => set((state) => ({ isPaymentOpened: !state.isPaymentOpened, socioSelected: null })),
+    clearSocioSelected: () => set({ socioSelected: null, isPaymentOpened: false, isEditOpened: false, isDeleteOpened: false, isNewOpened: false }),
 });
 
 
