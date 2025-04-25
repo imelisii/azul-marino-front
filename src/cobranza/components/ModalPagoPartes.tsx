@@ -1,53 +1,21 @@
 import { Dialog, Grid, DialogTitle, DialogContent, FormControl, InputLabel, Select, MenuItem, DialogActions, Button, TextField } from "@mui/material";
 import { Formik, Field, ErrorMessage } from "formik";
 import { Form } from "formik";
-import { Socio } from "../../shared/interfaces/socios/socios.interface";
-import { useCobranzaStore } from "../../store/cobranza-store";
-import { UseActividadesStore } from "../../store/actividades-store";
-import * as Yup from 'yup';
 import toast from "react-hot-toast";
-
-interface Props {
-    socio: Socio
-
-
-}
-
-const validationSchema = Yup.object({
-    medioPago1: Yup.string().required('Este campo es obligatorio'),
-    medioPago2: Yup.string()
-        .required('Este campo es obligatorio')
-        .test(
-            'no-igual-a-medioPago1',
-            'Los medios de pago no pueden ser iguales',
-            function (value) {
-                const { medioPago1 } = this.parent;
-                return value !== medioPago1;
-            }
-        ),
-    valor: Yup.number()
-        .required('Este campo es obligatorio')
-        .min(1, 'El valor debe ser mayor a 0'),
-    aCuentaDe: Yup.string().required('Este campo es obligatorio'),
-});
+import usePagaPartes from "../hooks/usePagaPartes";
 
 
 
 
 
 
-const ModalPagoPartes = ({ socio }: Props) => {
-
-    console.log(socio)
-
-    const isCobranzaParcialOpen = useCobranzaStore(state => state.cobranzaPartida)
-    const setCobranzaParcial = useCobranzaStore(state => state.setCobranzaPartida)
-    const actividad = UseActividadesStore(state => state.actividadSelected)
 
 
 
 
-
+const ModalPagoPartes = () => {
+    const { actividad, isCobranzaParcialOpen, setCobranzaParcial, socio, validationSchema } = usePagaPartes()
+    if (!socio) return <div>No se selecciono un socio</div>
 
     return (
         <Dialog open={isCobranzaParcialOpen} maxWidth="md" fullWidth>

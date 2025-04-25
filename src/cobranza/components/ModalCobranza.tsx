@@ -186,7 +186,7 @@ export default function ModalCobranza() {
                     </Grid>
 
                   </DialogActions>
-                  <ModalPagoPartes socio={socioSelected} />
+                  <ModalPagoPartes />
                   <ModalPagaParte />
                 </Form>
               )

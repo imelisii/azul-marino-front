@@ -14,10 +14,7 @@ import usePagaParte from '../hooks/usePagaParte';
 
 
 export default function ModalPagoPartes() {
-
     const { isPagaUnaParte, closeCobranzaUnaParte, actividadSelected, initialValues, validationSchema, socioSelected } = usePagaParte();
-
-
 
     return (
         <>
