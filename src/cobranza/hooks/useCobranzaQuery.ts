@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { CobranzaValues } from "../../shared/interfaces/socios/cobranza-values.interfafce";
+import { CobranzaValues } from "../interfaces/cobranza-values.interfafce";
 import toast from "react-hot-toast";
 import { cobranza } from "../services/cobranza";
+
+
 
 
 

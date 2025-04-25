@@ -1,26 +1,30 @@
 
 import UseActividades from "../../acatividades/hooks/UseActividades"
 import { useSociosStore } from "../../store/socios-store"
-import { UseSocioQuery } from "./UseSocioQuery"
+import { UseSocioQuery } from "../../socios/hooks/UseSocioQuery"
 import { UseActividadesStore } from "../../store/actividades-store";
 import useCobranzaQuery from "./useCobranzaQuery";
 
 import { useCobranzaStore } from "../../store/cobranza-store";
+import * as Yup from 'yup';
+import { GridColDef } from "@mui/x-data-grid";
 
 
-// interface UseModalCobranzaReturn {
-//     isPaymentOpened: boolean;
-//     actividadSelected: number | null;
-//     total: number;
-//     socioQuery: UseQueryResult<Socio>;
-//     actividadesQuery: UseQueryResult<Actividad[]>;
-//     cobranzaMutation: UseMutationResult<any, any, CobranzaValues, unknown>;
 
-//     setActividadSelected: (id: number) => void;
-//     paymentCloser: () => void;
-//     setCobranzaPartial: () => void;
-//     setTotal: (total: number) => void;
-// }
+
+
+
+const validationSchema = Yup.object({
+    actividad: Yup.string().required('La actividad es obligatoria'),
+    metodoPago: Yup.string().required('El método de pago es obligatorio'),
+    aCuentaDe: Yup.string().when("metodoPago", {
+        is: (metodoPago: string) => metodoPago !== "efectivo",
+        then: (schema) => schema.required('El monto a cuenta es obligatorio'),
+        otherwise: (schema) => schema.notRequired()
+    }),
+    monto: Yup.number().min(1, "El monto debe ser mayor a 1").required('El monto es obligatorio')
+});
+
 
 
 
@@ -36,9 +40,17 @@ const UseModalCobranza = () => {
     const setActividadSelected = UseActividadesStore(state => state.setActividadSelected)
     const setCobranzaPartial = useCobranzaStore(state => state.setCobranzaPartida)
 
-    const { socioQuery } = UseSocioQuery(socioSelected!)
+    const { socioQuery } = UseSocioQuery(socioSelected?.id!)
     const { actividadesQuery } = UseActividades()
     const { cobranzaMutation } = useCobranzaQuery()
+
+    const columnsHisotrial: GridColDef[] = [
+        { field: 'fecha', headerName: 'Fecha', flex: 1 },
+        { field: 'actividad', headerName: 'Actividad', flex: 1 },
+        { field: 'metodo', headerName: 'Método de Pago', flex: 1 },
+        { field: 'monto', headerName: 'Monto', flex: 1, type: 'number' },
+      ];
+    
 
 
 
@@ -46,12 +58,16 @@ const UseModalCobranza = () => {
 
 
     return {
+        validationSchema,
         isPaymentOpened,
         paymentCloser,
-    
+
         actividadSelected,
         setActividadSelected,
         setCobranzaPartial,
+        columnsHisotrial,
+
+
         socioQuery,
         actividadesQuery,
         cobranzaMutation,

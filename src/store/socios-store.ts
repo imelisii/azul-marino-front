@@ -1,5 +1,6 @@
 
 import { create, StateCreator } from "zustand"
+import { Socio } from '../shared/interfaces/socios/socios.interface';
 
 
 interface SociosStore {
@@ -7,12 +8,12 @@ interface SociosStore {
     isEditOpened: boolean;
     isDeleteOpened: boolean;
     isPaymentOpened: boolean;
-    socioSelected: number | null;
+    socioSelected: Socio | null;
 
     newHandler: () => void;
     editHandler: () => void;
     deleteHandler: () => void;
-    paymentHandler: (id: number) => void;
+    paymentHandler: (socio: Socio) => void;
     paymentColoser: () => void;
 
 
@@ -31,7 +32,7 @@ const sociosStore: StateCreator<SociosStore> = (set) => ({
     newHandler: () => set((state) => ({ isNewOpened: !state.isNewOpened })),
     editHandler: () => set((state) => ({ isEditOpened: !state.isEditOpened })),
     deleteHandler: () => set((state) => ({ isDeleteOpened: !state.isDeleteOpened })),
-    paymentHandler: (id: number) => set((state) => ({ isPaymentOpened: !state.isPaymentOpened, socioSelected: id })),
+    paymentHandler: (socio: Socio) => set((state) => ({ isPaymentOpened: !state.isPaymentOpened, socioSelected: socio })),
     paymentColoser: () => set((state) => ({ isPaymentOpened: !state.isPaymentOpened, socioSelected: null })),
 });
 

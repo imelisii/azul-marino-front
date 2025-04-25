@@ -1,11 +1,13 @@
 
 import { create, StateCreator } from "zustand"
+import { Actividad } from "../shared/interfaces/actividades/actividades.interface";
+
 
 
 
 interface ActividadesStore {
-    actividadSelected: number | null;
-    setActividadSelected: (id: number) => void;
+    actividadSelected: Actividad | null;
+    setActividadSelected: (actividad: Actividad) => void;
 }
 
 
@@ -13,7 +15,9 @@ interface ActividadesStore {
 
 const actividadesStore: StateCreator<ActividadesStore> = (set) => ({
     actividadSelected: null,
-    setActividadSelected: (id) => set({ actividadSelected: id })
+    actividadObjeto: null,
+    setActividadSelected: (actividad: Actividad) => set({ actividadSelected: actividad }),
+
 });
 
 

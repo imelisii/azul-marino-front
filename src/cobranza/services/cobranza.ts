@@ -1,5 +1,5 @@
 import { API } from "../../api/axios-api";
-import { CobranzaValues } from "../../shared/interfaces/socios/cobranza-values.interfafce";
+import { CobranzaValues } from "../../cobranza/interfaces/cobranza-values.interfafce";
 
 
 

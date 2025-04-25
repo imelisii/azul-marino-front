@@ -1,5 +1,5 @@
 import DataGridSocios from "../components/DataGridSocios"
-import ModalCobranza from "../components/ModalCobranza"
+import ModalCobranza from "../../cobranza/components/ModalCobranza"
 import SearchSocios from "../components/SearchSocios"
 
 

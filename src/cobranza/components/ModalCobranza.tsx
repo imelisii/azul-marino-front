@@ -14,24 +14,24 @@ import {
 import UseModalCobranza from "../hooks/UseModalCobranza";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Actividad } from "../../shared/interfaces/actividades/actividades.interface";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import ModalPagoPartes from "./ModalPagoPartes";
 import { useCobranzaStore } from "../../store/cobranza-store";
 import ModalPagaParte from "./ModalPagaParte";
 
+
+
 export default function ModalCobranza() {
-  const { isPaymentOpened, paymentCloser, socioQuery, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation } = UseModalCobranza();
+  const { isPaymentOpened, paymentCloser, socioQuery, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial } = UseModalCobranza();
   const openCobranzaPartidaValidada = useCobranzaStore(state => state.openCobranzaPartidaValidada)
   const openCobranzaUnaParteValidad = useCobranzaStore(state => state.openCobranzaUnaParteValidad)
 
 
-  const columns: GridColDef[] = [
-    { field: 'fecha', headerName: 'Fecha', flex: 1 },
-    { field: 'actividad', headerName: 'Actividad', flex: 1 },
-    { field: 'metodo', headerName: 'Método de Pago', flex: 1 },
-    { field: 'monto', headerName: 'Monto', flex: 1, type: 'number' },
-  ];
+
+  if (socioQuery.isError) return <div>Error al cargar el socio</div>
+  if (!socioQuery.isError && !socioQuery.data) return <div>El socio no existe</div>
+
 
 
   return (
@@ -52,10 +52,12 @@ export default function ModalCobranza() {
               monto: 0,
 
             }}
+
+            validationSchema={validationSchema}
             onSubmit={(values) => {
               cobranzaMutation.mutate({
                 socioId: socioQuery.data?.id!,
-                actividadId: actividadSelected!,
+                actividadId: actividadSelected?.id!,
                 metodoPago: values.metodoPago,
                 aCuentaDe: values.aCuentaDe,
                 monto: values.monto,
@@ -65,9 +67,8 @@ export default function ModalCobranza() {
             {({ values, handleChange, setFieldValue }) => {
               useEffect(() => {
                 if (actividadSelected && actividadesQuery.data) {
-                  const actividad = actividadesQuery.data.find(a => a.id === actividadSelected);
-                  if (actividad) {
-                    const nuevoPrecio = Number(actividad.precio)
+                  if (actividadSelected) {
+                    const nuevoPrecio = Number(actividadSelected.precio)
                     setFieldValue("monto", nuevoPrecio);
                   }
                 }
@@ -78,10 +79,8 @@ export default function ModalCobranza() {
 
               return (
                 <Form>
-                  <DialogTitle>Cobrar a Socio: {`${socioQuery.data?.nombre!}  ${socioQuery.data?.apellido!}`}</DialogTitle>
-                  {socioQuery.isError && "Error al cargar el socio"}
+                  <DialogTitle>Cobrar a Socio: {`${socioQuery.data?.nombre}  ${socioQuery.data?.apellido}`}</DialogTitle>
                   <DialogContent dividers>
-                    {actividadesQuery.isError && "Error al cargar las actividades"}
                     <FormControl fullWidth margin="normal">
                       <InputLabel id="actividad-label">Actividad</InputLabel>
                       <Field
@@ -93,12 +92,12 @@ export default function ModalCobranza() {
                         label="Actividad"
                       >
                         {actividadesQuery.data?.map((actividad: Actividad) => (
-                          <MenuItem onClick={() => setActividadSelected(actividad.id)} key={actividad.id} value={actividad.id}>
+                          <MenuItem onClick={() => setActividadSelected(actividad)} key={actividad.id} value={actividad.id}>
                             {`${actividad.nombre}  ${actividad.descripcion}`}
                           </MenuItem>
                         ))}
                       </Field>
-                      <ErrorMessage name="actividad" component="div" />
+                      <ErrorMessage name="actividad" component="div" className="text-red-500" />
                     </FormControl>
 
                     <FormControl fullWidth margin="normal">
@@ -115,7 +114,7 @@ export default function ModalCobranza() {
                         <MenuItem value="transferencia">Transferencia</MenuItem>
                         <MenuItem value="mp">Mercado Pago</MenuItem>
                       </Field>
-                      <ErrorMessage name="metodoPago" component="div" />
+                      <ErrorMessage name="metodoPago" component="div" className="text-red-500" />
                     </FormControl>
 
                     {
@@ -133,7 +132,7 @@ export default function ModalCobranza() {
                             <MenuItem value="anibal">Anibal</MenuItem>
                             <MenuItem value="marcos">Marcos</MenuItem>
                           </Field>
-                          <ErrorMessage name="aCuentaDe" component="div" />
+                          <ErrorMessage name="aCuentaDe" component="div" className="text-red-500" />
                         </FormControl>
                       )
 
@@ -153,13 +152,17 @@ export default function ModalCobranza() {
                     )}
 
                     <FormControl margin="normal" fullWidth>
-                      <TextField
+                      <Field
+                        as={TextField}
                         name="monto"
                         type="number"
-                        label={`El socio ${socioQuery.data?.nombre} paga:`}
+                        label={`El socio ${socioQuery.data.nombre} paga:`}
                         value={values.monto}
-                        onChange={handleChange}
-                      />
+
+                      >
+
+                      </Field>
+                      <ErrorMessage name="monto" component="div" className="text-red-500" />
                     </FormControl>
 
                   </DialogContent>
@@ -169,10 +172,10 @@ export default function ModalCobranza() {
                       <Button color="success" variant="contained" type="submit">
                         Cobrar
                       </Button>
-                      <Button onClick={() => openCobranzaPartidaValidada(actividadSelected ?? undefined)} size="large" variant="contained" color="info" >
+                      <Button onClick={() => openCobranzaPartidaValidada(actividadSelected?.id ?? undefined)} size="large" variant="contained" color="info" >
                         Paga en 2 partes
                       </Button>
-                      <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected ?? undefined, values.metodoPago ?? undefined)} size="large" variant="contained" color="warning" >
+                      <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected?.id ?? undefined, values.metodoPago ?? undefined)} size="large" variant="contained" color="warning" >
                         Paga una parte
                       </Button>
                       <Button size="large" variant="contained" color="error" >
@@ -183,8 +186,8 @@ export default function ModalCobranza() {
                     </Grid>
 
                   </DialogActions>
-                  <ModalPagoPartes socio={socioQuery.data!} />
-                  <ModalPagaParte socio={socioQuery.data!} />
+                  <ModalPagoPartes socio={socioQuery.data} />
+                  <ModalPagaParte />
                 </Form>
               )
 
@@ -197,7 +200,7 @@ export default function ModalCobranza() {
           <DialogTitle>Historial del socio</DialogTitle>
 
           <div style={{ height: "50vh", padding: 10, width: '100%' }}>
-            <DataGrid rows={[]} columns={columns} disableRowSelectionOnClick />
+            <DataGrid rows={[]} columns={columnsHisotrial} disableRowSelectionOnClick />
           </div>
         </Grid>
       </Grid>
