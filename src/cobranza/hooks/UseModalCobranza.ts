@@ -23,7 +23,12 @@ const validationSchema = Yup.object({
     monto: Yup.number().min(1, "El monto debe ser mayor a 1").required('El monto es obligatorio')
 });
 
-
+const columnsHisotrial: GridColDef[] = [
+    { field: 'fecha', headerName: 'Fecha', flex: 1 },
+    { field: 'actividad', headerName: 'Actividad', flex: 1 },
+    { field: 'metodo', headerName: 'Método de Pago', flex: 1 },
+    { field: 'monto', headerName: 'Monto', flex: 1, type: 'number' },
+];
 
 
 
@@ -38,21 +43,9 @@ const UseModalCobranza = () => {
     const setActividadSelected = UseActividadesStore(state => state.setActividadSelected)
     const setCobranzaPartial = useCobranzaStore(state => state.setCobranzaPartida)
 
-   
+
     const { actividadesQuery } = UseActividades()
-    const { cobranzaMutation } = useCobranzaQuery()
-
-    const columnsHisotrial: GridColDef[] = [
-        { field: 'fecha', headerName: 'Fecha', flex: 1 },
-        { field: 'actividad', headerName: 'Actividad', flex: 1 },
-        { field: 'metodo', headerName: 'Método de Pago', flex: 1 },
-        { field: 'monto', headerName: 'Monto', flex: 1, type: 'number' },
-      ];
-    
-
-
-
-
+    const { cobranzaMutation } = useCobranzaQuery("/cobros")
 
 
     return {
@@ -67,7 +60,7 @@ const UseModalCobranza = () => {
         columnsHisotrial,
 
 
-       
+
         actividadesQuery,
         cobranzaMutation,
 

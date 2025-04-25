@@ -10,6 +10,7 @@ import {
   MenuItem,
   Grid,
   TextField,
+  Box,
 } from "@mui/material";
 import UseModalCobranza from "../hooks/UseModalCobranza";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -19,6 +20,7 @@ import { useEffect } from "react";
 import ModalPagoPartes from "./ModalPagoPartes";
 import { useCobranzaStore } from "../../store/cobranza-store";
 import ModalPagaParte from "./ModalPagaParte";
+import ModalNoPagaNada from "./ModalNoPagaNada";
 
 
 
@@ -26,11 +28,12 @@ export default function ModalCobranza() {
   const { isPaymentOpened, paymentCloser, socioSelected, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial } = UseModalCobranza();
   const openCobranzaPartidaValidada = useCobranzaStore(state => state.openCobranzaPartidaValidada)
   const openCobranzaUnaParteValidad = useCobranzaStore(state => state.openCobranzaUnaParteValidad)
+  const openCobranzaNoPagaNada = useCobranzaStore(state => state.openCobranzaNoPagaNada)
 
 
-  if(!socioSelected) return <div>No se selecciono un socio</div>
+  if (!socioSelected) return <div>No se selecciono un socio</div>
 
- 
+
 
 
 
@@ -79,7 +82,22 @@ export default function ModalCobranza() {
 
               return (
                 <Form>
-                  <DialogTitle>Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido}`}</DialogTitle>
+                  <DialogTitle>
+                    <Box display="flex" alignItems="center">
+                      <Button
+                        size="small"
+                        variant="contained"
+                        color="error"
+                        onClick={paymentCloser}
+                        sx={{ mr: 2 }}
+                      >
+                       Cerrar
+                      </Button>
+                      <span>
+                        Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido}`}
+                      </span>
+                    </Box>
+                  </DialogTitle>
                   <DialogContent dividers>
                     <FormControl fullWidth margin="normal">
                       <InputLabel id="actividad-label">Actividad</InputLabel>
@@ -168,9 +186,9 @@ export default function ModalCobranza() {
                   </DialogContent>
 
                   <DialogActions>
-                    <Grid spacing={8} justifyContent={"space-evenly"} container>
-                      <Button color="success" variant="contained" type="submit">
-                        Cobrar
+                    <Grid flex={1} spacing={3} justifyContent={"space-between"} container>
+                      <Button onClick={() => openCobranzaNoPagaNada()} size="large" variant="contained" color="error" >
+                        No Paga nada
                       </Button>
                       <Button onClick={() => openCobranzaPartidaValidada(actividadSelected?.id!)} size="large" variant="contained" color="info" >
                         Paga en 2 partes
@@ -178,16 +196,18 @@ export default function ModalCobranza() {
                       <Button onClick={() => openCobranzaUnaParteValidad(actividadSelected?.id!, values.metodoPago ?? undefined)} size="large" variant="contained" color="warning" >
                         Paga una parte
                       </Button>
-                      <Button size="large" variant="contained" color="error" >
-                        No Paga nada
+
+                      <Button color="success" variant="contained" type="submit">
+                        Cobrar
                       </Button>
-                      <Button size="large" variant="contained" onClick={paymentCloser}>Cancelar</Button>
+
 
                     </Grid>
 
                   </DialogActions>
                   <ModalPagoPartes />
                   <ModalPagaParte />
+                  <ModalNoPagaNada />
                 </Form>
               )
 

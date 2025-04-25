@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import usePagaParte from '../hooks/usePagaParte';
+import { Grid } from '@mui/material';
 
 
 
@@ -20,7 +21,7 @@ export default function ModalPagoPartes() {
         <>
             <Dialog
                 maxWidth="xl"
-                fullWidth
+                
                 open={isPagaUnaParte}
                 onClose={closeCobranzaUnaParte}
                 slotProps={{
@@ -54,12 +55,17 @@ export default function ModalPagoPartes() {
                                 <ErrorMessage name="cuotaParte" component="div" className='text-red-500' />
                             </DialogContent>
                             <DialogActions>
-                                <Button variant="contained" color="success" type="submit">
-                                    Cobrar
-                                </Button>
+                                <Grid flex={1} container justifyContent={"space-between"} alignItems={"center"}>
                                 <Button variant="contained" onClick={closeCobranzaUnaParte}>
                                     Cancelar
                                 </Button>
+                                <Button variant="contained" color="success" type="submit">
+                                    Cobrar
+                                </Button>
+
+                                    
+                                </Grid>
+                               
                             </DialogActions>
                         </Form>
                     )}

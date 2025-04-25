@@ -122,9 +122,9 @@ const ModalPagoPartes = () => {
                                     </DialogContent>
 
                                     <DialogActions>
-                                        <Grid spacing={8} justifyContent={"space-evenly"} container>
-                                            <Button size="large" color="success" variant="contained" type="submit">Cobrar</Button>
+                                        <Grid  flex={1} justifyContent={"space-between"} container>
                                             <Button onClick={() => setCobranzaParcial()} size="large" color="error" variant="contained">Cancelar</Button>
+                                            <Button size="large" color="success" variant="contained" type="submit">Cobrar</Button>
 
                                         </Grid>
 

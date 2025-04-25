@@ -4,18 +4,21 @@ import toast from "react-hot-toast";
 interface CobranzaStore {
     cobranzaPartida: boolean;
     cobranzaUnaParte: boolean;
+    cobranzaNoPagaNada: boolean;
 
 
     setCobranzaPartida: () => void;
     closeCobranzaUnaParte: () => void;
     openCobranzaPartidaValidada: (idActividad?: number) => void;
-    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?:string) => void;
-
+    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?: string) => void;
+    openCobranzaNoPagaNada: () => void;
+    closeCobranzaNoPagaNada: () => void;
 }
 
 const cobranzaStore: StateCreator<CobranzaStore> = (set) => ({
     cobranzaPartida: false,
     cobranzaUnaParte: false,
+    cobranzaNoPagaNada: false,
 
     setCobranzaPartida: () => {
         set((state) => ({ cobranzaPartida: !state.cobranzaPartida }));
@@ -30,9 +33,15 @@ const cobranzaStore: StateCreator<CobranzaStore> = (set) => ({
     closeCobranzaUnaParte: () => {
         set((state) => ({ cobranzaUnaParte: !state.cobranzaUnaParte }));
     },
-    openCobranzaUnaParteValidad: (idActividad?:number, medioPago?:string) => {
-        if(!idActividad || !medioPago) return toast.error("Seleccione la actividad y el medio de pago")
+    openCobranzaUnaParteValidad: (idActividad?: number, medioPago?: string) => {
+        if (!idActividad || !medioPago) return toast.error("Seleccione la actividad y el medio de pago")
         set({ cobranzaUnaParte: true });
+    },
+    openCobranzaNoPagaNada: () => {
+        set({ cobranzaNoPagaNada: true });
+    },
+    closeCobranzaNoPagaNada: () => {
+        set({ cobranzaNoPagaNada: false });
     },
 });
 
