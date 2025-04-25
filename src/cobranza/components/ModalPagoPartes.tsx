@@ -15,8 +15,10 @@ import usePagaPartes from "../hooks/usePagaPartes";
 
 const ModalPagoPartes = () => {
     const { actividad, isCobranzaParcialOpen, setCobranzaParcial, socio, validationSchema, initualValues, cobranzaMutation } = usePagaPartes()
+
     if (!socio) return <div>No se selecciono un socio</div>
-    if (!actividad) return 
+    if (!actividad) return
+
     return (
         <Dialog open={isCobranzaParcialOpen} maxWidth="md" fullWidth>
             <Grid container columns={12}>
@@ -73,7 +75,7 @@ const ModalPagoPartes = () => {
                                             <ErrorMessage name="valor" component="div" className="text-red-500" />
                                         </FormControl>
 
-                                       
+
                                         <FormControl fullWidth margin="normal">
                                             <InputLabel id="metodoPago-label">Medio Pago 2</InputLabel>
                                             <Field

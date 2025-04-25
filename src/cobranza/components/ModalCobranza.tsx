@@ -18,17 +18,28 @@ import { Actividad } from "../../shared/interfaces/actividades/actividades.inter
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import ModalPagoPartes from "./ModalPagoPartes";
-import { useCobranzaStore } from "../../store/cobranza-store";
 import ModalPagaParte from "./ModalPagaParte";
 import ModalNoPagaNada from "./ModalNoPagaNada";
 
 
 
 export default function ModalCobranza() {
-  const { isPaymentOpened, paymentCloser, socioSelected, actividadesQuery, actividadSelected, setActividadSelected, cobranzaMutation, validationSchema, columnsHisotrial, socioQuery, initialValues } = UseModalCobranza();
-  const openCobranzaPartidaValidada = useCobranzaStore(state => state.openCobranzaPartidaValidada)
-  const openCobranzaUnaParteValidad = useCobranzaStore(state => state.openCobranzaUnaParteValidad)
-  const openCobranzaNoPagaNada = useCobranzaStore(state => state.openCobranzaNoPagaNada)
+  const { isPaymentOpened,
+    paymentCloser,
+    socioSelected,
+    actividadesQuery,
+    actividadSelected,
+    setActividadSelected,
+    cobranzaMutation,
+    validationSchema,
+    columnsHisotrial,
+    socioQuery,
+    initialValues,
+    openCobranzaNoPagaNada,
+    openCobranzaPartidaValidada,
+    openCobranzaUnaParteValidad,
+  } = UseModalCobranza();
+
 
 
   if (!socioSelected) return null

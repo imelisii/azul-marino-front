@@ -17,7 +17,7 @@ const initialValues = {
     aCuentaDe: '',
     monto: 0,
 
-  }
+}
 
 
 
@@ -56,6 +56,9 @@ const UseModalCobranza = () => {
     const actividadSelected = UseActividadesStore(state => state.actividadSelected)
     const setActividadSelected = UseActividadesStore(state => state.setActividadSelected)
     const setCobranzaPartial = useCobranzaStore(state => state.setCobranzaPartida)
+    const openCobranzaPartidaValidada = useCobranzaStore(state => state.openCobranzaPartidaValidada)
+    const openCobranzaUnaParteValidad = useCobranzaStore(state => state.openCobranzaUnaParteValidad)
+    const openCobranzaNoPagaNada = useCobranzaStore(state => state.openCobranzaNoPagaNada)
 
 
     const { actividadesQuery } = UseActividades()
@@ -74,6 +77,9 @@ const UseModalCobranza = () => {
         setCobranzaPartial,
         columnsHisotrial,
         initialValues,
+        openCobranzaPartidaValidada,
+        openCobranzaUnaParteValidad,
+        openCobranzaNoPagaNada,
 
 
 
