@@ -56,7 +56,7 @@ export default function ModalCobranza() {
                 actividadId: actividadSelected?.id!,
                 metodoPago: values.metodoPago,
                 aCuentaDe: values.aCuentaDe,
-                monto: values.monto,
+                monto:  Number(values.monto),
               });
             }}
           >

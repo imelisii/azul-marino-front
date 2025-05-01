@@ -4,8 +4,9 @@ import { CobranzaValues } from "../../cobranza/interfaces/cobranza-values.interf
 
 
 export const cobranza = async (cobranzaValues: CobranzaValues, endPoint: string) => {
+
     const { data } = await API.post(`${endPoint}`, {
-        cobranzaValues
+        ...cobranzaValues
     })
 
     return data
