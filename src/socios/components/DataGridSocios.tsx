@@ -28,14 +28,6 @@ export default function DataGridSocios() {
       <DataGrid
         rows={sociosQuery.data ?? []}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
         disableRowSelectionOnClick
         localeText={localeText}
         

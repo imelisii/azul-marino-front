@@ -37,3 +37,13 @@ export interface Saldo {
 }
 
 
+export interface newSocioInterface {
+  id?: number
+  nombre: string
+  apellido: string
+  fecha_nacimiento: Date
+  celular: string
+  dni: string
+}
+
+
