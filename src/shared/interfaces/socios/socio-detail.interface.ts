@@ -1,6 +1,9 @@
+import { ReactNode } from "react";
+
 export interface SocioDetail {
     saldos: Saldo[];
     inscripciones: InscripcionesDetail[];
+    deudas: number;
 }
 
 export interface InscripcionesDetail {
@@ -17,5 +20,5 @@ export interface Saldo {
     monto: string;
     descripcion: string;
     fecha: Date;
-    tipo_movimiento: string;
+    acciones: ReactNode;
 }

@@ -31,7 +31,7 @@ const useNewSocio = () => {
         nombre: Yup.string().required("Campo Requerido").min(2, "Caracteres minimos deben ser 2"),
         apellido: Yup.string().required("Campo Requerido").min(2, "Caracteres minimos deben ser 2") ,
         dni: Yup.number().required("Campo Requerido").min(8, "Minimo deben ser 8  numeros"),
-        celular: Yup.string().required("Campo Requerido").length(10, "Deben ser 10 numeros"),
+        celular: Yup.string().required("Campo Requerido").length(8, "Deben ser 8 numeros"),
     })
 
     const newSocioQuery = useMutation({

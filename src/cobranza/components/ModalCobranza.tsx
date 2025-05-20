@@ -22,7 +22,6 @@ import ModalPagaParte from "./ModalPagaParte";
 import ModalNoPagaNada from "./ModalNoPagaNada";
 
 
-
 export default function ModalCobranza() {
   const { isPaymentOpened,
     paymentCloser,
@@ -38,6 +37,7 @@ export default function ModalCobranza() {
     openCobranzaNoPagaNada,
     openCobranzaPartidaValidada,
     openCobranzaUnaParteValidad,
+    columnSaldos,
   } = UseModalCobranza();
 
 
@@ -56,7 +56,7 @@ export default function ModalCobranza() {
                 actividadId: actividadSelected?.id!,
                 metodoPago: values.metodoPago,
                 aCuentaDe: values.aCuentaDe,
-                monto:  Number(values.monto),
+                monto: Number(values.monto),
               });
             }}
           >
@@ -84,7 +84,8 @@ export default function ModalCobranza() {
                         Cerrar
                       </Button>
                       <span>
-                        Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido}`}
+                        Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido} `}
+                         {socioQuery.data?.saldos.length >= 1  && (<span className="text-red-400">Saldo: {socioQuery.data.deudas}</span>)}
                       </span>
                     </Box>
                   </DialogTitle>
@@ -206,6 +207,10 @@ export default function ModalCobranza() {
 
           <div style={{ height: "50vh", padding: 10, width: '100%' }}>
             <DataGrid rows={socioQuery.data?.inscripciones} columns={columnsHisotrial} disableRowSelectionOnClick />
+          </div>
+          <div style={{ height: "40vh", padding: 10, width: '100%' }}>
+            <DataGrid rows={socioQuery.data?.saldos} columns={columnSaldos} disableRowSelectionOnClick />
+
           </div>
         </Grid>
       </Grid>

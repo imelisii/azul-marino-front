@@ -111,7 +111,7 @@ const ModalNewSocio = () => {
                                     <DialogActions>
                                         <Grid flex={1} justifyContent={"space-between"} container>
                                             <Button onClick={() => setNewState()} size="large" color="error" variant="contained">Cancelar</Button>
-                                            <Button size="large" color="success" variant="contained" type="submit">Cobrar</Button>
+                                            <Button size="large" color="success" variant="contained" type="submit">Agregar</Button>
 
                                         </Grid>
 

@@ -7,7 +7,7 @@ import { useCobranzaStore } from "../../store/cobranza-store";
 import * as Yup from 'yup';
 import { GridColDef } from "@mui/x-data-grid";
 import { UseSocioQuery } from "../../socios/hooks/UseSocioQuery";
-import { InscripcionesDetail } from "../../shared/interfaces/socios/socio-detail.interface";
+import { InscripcionesDetail, Saldo } from "../../shared/interfaces/socios/socio-detail.interface";
 
 
 
@@ -45,6 +45,21 @@ const columnsHisotrial: GridColDef<InscripcionesDetail>[] = [
 ];
 
 
+const columnSaldos: GridColDef<Saldo>[] = [
+    { field: 'descripcion', headerName: 'Descripción', flex: 1 },
+    { field: "monto", headerName: 'Monto', flex: 1 },
+    { field: 'fecha', headerName: 'Fecha', flex: 1 },
+    {
+        field: "acciones",
+        headerName: 'Acciones',
+        flex: 1,
+        renderCell: (params) => {
+            return params.row.acciones;
+        }
+    }
+];
+
+
 
 
 
@@ -76,6 +91,7 @@ const UseModalCobranza = () => {
         setActividadSelected,
         setCobranzaPartial,
         columnsHisotrial,
+        columnSaldos,
         initialValues,
         openCobranzaPartidaValidada,
         openCobranzaUnaParteValidad,
