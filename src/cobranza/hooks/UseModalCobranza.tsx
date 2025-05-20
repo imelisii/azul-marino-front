@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { GridColDef } from "@mui/x-data-grid";
 import { UseSocioQuery } from "../../socios/hooks/UseSocioQuery";
 import { InscripcionesDetail, Saldo } from "../../shared/interfaces/socios/socio-detail.interface";
+import { Button } from "@mui/material";
 
 
 
@@ -53,9 +54,14 @@ const columnSaldos: GridColDef<Saldo>[] = [
         field: "acciones",
         headerName: 'Acciones',
         flex: 1,
-        renderCell: (params) => {
-            return params.row.acciones;
-        }
+        renderCell: () => (
+            <div>
+                <Button variant="contained" color="error" >
+                Cobrar Deuda
+                </Button>
+            </div>
+        )
+        
     }
 ];
 

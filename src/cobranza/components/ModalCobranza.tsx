@@ -85,7 +85,7 @@ export default function ModalCobranza() {
                       </Button>
                       <span>
                         Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido} `}
-                         {socioQuery.data?.saldos.length >= 1  && (<span className="text-red-400">Saldo: {socioQuery.data.deudas}</span>)}
+                         {socioQuery.data?.saldos && socioQuery.data.saldos.length >= 1 && (<span className="text-red-400">Saldo: {socioQuery.data.deudas}</span>)}
                       </span>
                     </Box>
                   </DialogTitle>
