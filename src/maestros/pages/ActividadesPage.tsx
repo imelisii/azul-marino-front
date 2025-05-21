@@ -13,7 +13,13 @@ const ActividadesPage = () => {
         <div>
             <div className='flex flex-row justify-between items-center p-4'>
                 <h1>Actividades</h1>
-                <div className='justify-end'><Button variant='contained' color='success' onClick={() => openNewActivity(true)} >Crear Actividad</Button></div>
+                <div className='justify-end'>
+                    <Button variant='contained'
+                        color='success'
+                        onClick={() => openNewActivity(true)}>
+                            
+                        Crear Actividad
+                    </Button></div>
             </div>
             <div style={{ height: "90vh", width: '100%' }}>
                 <DataGrid
