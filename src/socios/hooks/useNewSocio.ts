@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 
 const useNewSocio = () => {
     const isNewOpen = useSociosStore(state => state.isNewOpened)
-    const setNewState = useSociosStore(state => state.newHandler)
+    const newSocioHandler = useSociosStore(state => state.newHandler)
 
     const queryClient = useQueryClient()
 
@@ -39,7 +39,7 @@ const useNewSocio = () => {
         mutationFn: (socioData: newSocioInterface) => newSocio(socioData),
         onSuccess: (data) => {
             toast.success(`Se creo el socio ${data.nombre} ${data.apellido} `)
-            setNewState()
+            newSocioHandler()
             queryClient.invalidateQueries({ queryKey: ["socios"] })
 
         },
@@ -63,7 +63,7 @@ const useNewSocio = () => {
 
 
         newSocioQuery,
-        setNewState
+        newSocioHandler
     }
 
 
