@@ -1,5 +1,5 @@
 import type { IconType } from 'react-icons';
-import { IoSpeedometerOutline, IoLogOutOutline  } from 'react-icons/io5';
+import { IoSpeedometerOutline, IoLogOutOutline, IoListOutline  } from 'react-icons/io5';
 import { SideMenuItem } from './SideMenuItem';
 import { NavLink } from 'react-router';
 
@@ -14,7 +14,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { title: 'Socios', subTitle: 'Control Socios', href: '/socios', Icon: IoSpeedometerOutline },
-  // { title: "Pedidos Padre", subTitle: "Pedidos Padre", href: "/dashboard/pedidos-padre", Icon: IoListOutline },
+   { title: "Maestros", subTitle: "", href: "/maestros", Icon: IoListOutline },
   // { title: 'Maestros', subTitle: 'CRUD en APP', href: '/maestros', Icon: IoListOutline },
 
 ];
