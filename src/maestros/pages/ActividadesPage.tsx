@@ -10,7 +10,7 @@ const ActividadesPage = () => {
         <div>
             <h1>Actividades</h1>
             <hr />
-                <div style={{ height: 400, width: '100%' }}>
+                <div style={{ height: "90vh", width: '100%' }}>
                     <DataGrid
                         rows={actividadesQuery.data ?? []} columns={columns} />
                 </div>
