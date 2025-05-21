@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Actividad } from "../../shared/interfaces/actividades/actividades.interface"
+import { Actividad, NewActivity } from "../../shared/interfaces/actividades/actividades.interface"
 import { createActividad } from "../services/create-actividad"
 import toast from "react-hot-toast"
 import { AxiosError } from "axios"
 import { NestErrorResponse } from "../../shared/interfaces/axios-err-response"
 
 
-const UseActividad = () => {
+const useNewActivityQuery = () => {
     const clientQuery = useQueryClient()
 
     const actividadesMutation = useMutation({
-        mutationKey: ["actividad"],
-        mutationFn: (newActividad: Actividad) => createActividad(newActividad),
+        mutationKey: ["newActividad"],
+        mutationFn: (newActividad: NewActivity) => createActividad(newActividad),
         onSuccess: (data) => {
             toast.success(`Se creo la actividad ${data.nombre} `)
             clientQuery.invalidateQueries({ queryKey: ["actividades"] })
@@ -30,4 +30,4 @@ const UseActividad = () => {
     }
 }
 
-export default UseActividad
+export default useNewActivityQuery

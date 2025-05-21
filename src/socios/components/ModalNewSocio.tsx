@@ -9,7 +9,7 @@ import useNewSocio from "../hooks/useNewSocio"
 
 
 const ModalNewSocio = () => {
-    const { initialValues, isNewOpen, validationSchema, newSocioQuery, setNewState } = useNewSocio()
+    const { initialValues, isNewOpen, validationSchema, newSocioQuery, newSocioHandler } = useNewSocio()
 
 
     return (
@@ -110,7 +110,7 @@ const ModalNewSocio = () => {
 
                                     <DialogActions>
                                         <Grid flex={1} justifyContent={"space-between"} container>
-                                            <Button onClick={() => setNewState()} size="large" color="error" variant="contained">Cancelar</Button>
+                                            <Button onClick={() => newSocioHandler()} size="large" color="error" variant="contained">Cancelar</Button>
                                             <Button size="large" color="success" variant="contained" type="submit">Agregar</Button>
 
                                         </Grid>
