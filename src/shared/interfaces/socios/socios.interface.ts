@@ -44,6 +44,15 @@ export interface newSocioInterface {
   fecha_nacimiento: Date
   celular: string
   dni: string
+  familiar: string
+  direccion: string
+  localidad: string
+  telefono: string
+  madre: string
+  telefono_madre: string
+  padre: string
+  telefono_padre: string
+  mail: string
 }
 
 

@@ -31,25 +31,7 @@ const ModalNewSocio = () => {
                                     <DialogTitle>Crear Socio Nuevo</DialogTitle>
                                     <DialogContent dividers>
                                         {/* Número de socio */}
-                                        <FormControl fullWidth margin="normal">
-                                            <Field
-                                                as={TextField}
-                                                name="numero_socio"
-                                                value={values.numero_socio}
-                                                label="Número de Socio"
-                                            />
-                                            <ErrorMessage name="numero_socio" component="div" className="text-red-500" />
-                                        </FormControl>
-                                        {/* Familiar */}
-                                        <FormControl fullWidth margin="normal">
-                                            <Field
-                                                as={TextField}
-                                                name="familiar"
-                                                value={values.familiar}
-                                                label="Familiar"
-                                            />
-                                            <ErrorMessage name="familiar" component="div" className="text-red-500" />
-                                        </FormControl>
+
                                         {/* Dni */}
                                         <FormControl fullWidth margin="normal">
                                             <Field

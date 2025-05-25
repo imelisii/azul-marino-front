@@ -13,6 +13,7 @@ import { useSociosStore } from '../../store/socios-store';
 const UseSociosDataGrid = () => {
 
   const paymentHandler = useSociosStore(state => state.paymentHandler)
+  const editHandler = useSociosStore(state => state.editHandler)
   const { sociosQuery } = UseSociosQuery()
 
   const columns: GridColDef<Socio>[] = [
@@ -56,7 +57,7 @@ const UseSociosDataGrid = () => {
       flex: 1,
       renderCell: (params) => (
         <div className="flex gap-2">
-          <IconButton aria-label="edit">
+          <IconButton aria-label="edit" onClick={() => editHandler(params.row)}>
             <EditIcon color="warning" />
           </IconButton>
           <IconButton onClick={() => paymentHandler(params.row)} aria-label="payments">
