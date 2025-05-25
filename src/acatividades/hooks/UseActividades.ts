@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { getActividades } from "../services/get-actividades"
 
+
+
+
 const UseActividades = () => {
 
     const actividadesQuery = useQuery({
@@ -10,9 +13,6 @@ const UseActividades = () => {
         
 
     })
-
-
-
 
     return {
         actividadesQuery,

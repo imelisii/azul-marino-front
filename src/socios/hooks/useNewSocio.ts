@@ -22,7 +22,17 @@ const useNewSocio = () => {
         apellido: "",
         dni: "",
         fecha_nacimiento: new Date(),
-        celular: ""
+        celular: "",
+        numero_socio: "",
+        familiar: "",
+        direccion: "",
+        localidad: "",
+        telefono: "",
+        madre: "",
+        telefono_madre: "",
+        padre: "",
+        telefono_padre: "",
+        mail: ""
     }
 
 
@@ -30,8 +40,19 @@ const useNewSocio = () => {
     const validationSchema = Yup.object({
         nombre: Yup.string().required("Campo Requerido").min(2, "Caracteres minimos deben ser 2"),
         apellido: Yup.string().required("Campo Requerido").min(2, "Caracteres minimos deben ser 2") ,
-        dni: Yup.number().required("Campo Requerido").min(8, "Minimo deben ser 8  numeros"),
-        celular: Yup.string().required("Campo Requerido").length(8, "Deben ser 8 numeros"),
+        dni: Yup.string().required("Campo Requerido").length(8, "Deben ser 8 números"),
+        fecha_nacimiento: Yup.date().required("Campo Requerido"),
+        celular: Yup.string().required("Campo Requerido").length(8, "Deben ser 8 números"),
+        numero_socio: Yup.string().required("Campo Requerido"),
+        familiar: Yup.string().required("Campo Requerido"),
+        direccion: Yup.string().required("Campo Requerido"),
+        localidad: Yup.string().required("Campo Requerido"),
+        telefono: Yup.string().required("Campo Requerido"),
+        madre: Yup.string().required("Campo Requerido"),
+        telefono_madre: Yup.string().required("Campo Requerido"),
+        padre: Yup.string().required("Campo Requerido"),
+        telefono_padre: Yup.string().required("Campo Requerido"),
+        mail: Yup.string().email("Debe ser un email válido").required("Campo Requerido"),
     })
 
     const newSocioQuery = useMutation({

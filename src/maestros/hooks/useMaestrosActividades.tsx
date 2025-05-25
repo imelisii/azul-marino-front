@@ -10,7 +10,9 @@ import useNewActivityQuery from "../../acatividades/hooks/useNewActivity";
 const useMaestrosActividades = () => {
     const { actividadesQuery } = UseActividades()
     const isOpenNewActivity = useMaestroSotre(state => state.isOpenNewActivity)
+    const closeOpenNewActivity = useMaestroSotre(state => state.setCloseNewActivity)
     const { actividadesMutation } = useNewActivityQuery()
+    const setEditActivity = useMaestroSotre(state => state.setACtividadMaestrosSelected)
 
     const initialValues: NewActivity = {
         nombre: "",
@@ -30,7 +32,7 @@ const useMaestrosActividades = () => {
             field: "Acciones", headerName: "Acciones", flex: 1, renderCell: (params) => {
                 return (
                     <div className="flex gap-2 mt-1">
-                        <Button variant="contained" color="primary" onClick={() => console.log(params.row)}>Editar</Button>
+                        <Button variant="contained" color="primary" onClick={() => setEditActivity(params.row)}>Editar</Button>
                     </div>
                 )
             }
@@ -56,7 +58,8 @@ const useMaestrosActividades = () => {
         initialValues,
         columns,
         isOpenNewActivity,
-        actividadesMutation
+        actividadesMutation,
+        closeOpenNewActivity
     }
 }
 
