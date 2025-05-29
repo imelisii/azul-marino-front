@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import ModalPagoPartes from "./ModalPagoPartes";
 import ModalPagaParte from "./ModalPagaParte";
 import ModalNoPagaNada from "./ModalNoPagaNada";
+import ModalCobrarDeuda from "./ModalCobrarDeuda";
 
 
 export default function ModalCobranza() {
@@ -85,7 +86,7 @@ export default function ModalCobranza() {
                       </Button>
                       <span>
                         Cobrar a Socio: {`${socioSelected.nombre}  ${socioSelected.apellido} `}
-                         {socioQuery.data?.saldos && socioQuery.data.saldos.length >= 1 && (<span className="text-red-400">Saldo: {socioQuery.data.deudas}</span>)}
+                        {socioQuery.data?.saldos && socioQuery.data.saldos.length >= 1 && (<span className="text-red-400">Saldo: {socioQuery.data.deudas}</span>)}
                       </span>
                     </Box>
                   </DialogTitle>
@@ -194,6 +195,7 @@ export default function ModalCobranza() {
                   <ModalPagoPartes />
                   <ModalPagaParte metodoPago={values.metodoPago} aCuentaDe={values.aCuentaDe} />
                   <ModalNoPagaNada />
+                  <ModalCobrarDeuda />
                 </Form>
               )
 

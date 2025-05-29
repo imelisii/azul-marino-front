@@ -54,14 +54,14 @@ const columnSaldos: GridColDef<Saldo>[] = [
         field: "acciones",
         headerName: 'Acciones',
         flex: 1,
-        renderCell: () => (
+        renderCell: (params) => (
             <div>
-                <Button variant="contained" color="error" >
-                Cobrar Deuda
+                <Button variant="contained" color="error" onClick={() => useCobranzaStore.getState().openCobranzaDeuda(params.row)}>
+                    Cobrar Deuda
                 </Button>
             </div>
         )
-        
+
     }
 ];
 
