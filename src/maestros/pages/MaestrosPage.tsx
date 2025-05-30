@@ -30,13 +30,15 @@ const MaestrosPage = () => {
                     </WhiteCard>
                 </NavLink>
 
-                {/* <NavLink to={"/maestros/campos"}>
+                <NavLink to={"/maestros/caja"}>
                     <WhiteCard centered>
-                        <GiField size={50} color={Color.primary} />
-                        <h2>Campos</h2>
-                        <p>Información</p>
+                        <FaPersonSwimming size={50} color="#01427f" />
+                        <h2 className="font-semibold text-blue-900">Caja</h2>
+                        <p className="font-semibold text-blue-900">caja</p>
                     </WhiteCard>
-                </NavLink> */}
+                </NavLink>
+
+
 
                 {/* <NavLink to={"/maestros/usuarios"}>
                     <WhiteCard centered>
