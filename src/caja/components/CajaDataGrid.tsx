@@ -1,5 +1,5 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, CircularProgress, Button, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { es } from 'date-fns/locale';
