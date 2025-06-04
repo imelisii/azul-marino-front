@@ -9,30 +9,38 @@ import {
     TextField
 } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import useMaestrosActividades from "../hooks/useMaestrosActividades";
+import useEditActivity from "../hooks/useEditActivity";
 
 
 
+interface Props {
+    id: number;
+}
 
 
 
-
-
-const ModalNewActividad = () => {
-    const { initialValues, validationSchema, isOpenNewActivity, actividadesMutation, closeOpenNewActivity } = useMaestrosActividades()
+const ModalEditActivity = ({ id }: Props) => {
+    const { openAcitivity, setCloseEditActivity, initialValues, updateActivityQuery } = useEditActivity(id)
 
 
 
     return (
-        <Dialog open={isOpenNewActivity} maxWidth="sm" fullWidth>
+        <Dialog open={openAcitivity} maxWidth="sm" fullWidth>
             <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={(values) => actividadesMutation.mutate({ ...values })}
+                enableReinitialize
+                onSubmit={(values) => updateActivityQuery.mutate({
+                    id: id,
+                    nombre: values.nombre,
+                    descripcion: values.descripcion,
+                    precio: values.precio,
+                    activa: values.activa
+                })
+                }
             >
                 {({ values, setFieldValue }) => (
                     <Form>
-                        <DialogTitle>Crear Nueva Actividad</DialogTitle>
+                        <DialogTitle>Editar Actividad</DialogTitle>
                         <DialogContent dividers>
                             <FormControl fullWidth margin="normal">
                                 <Field
@@ -80,11 +88,11 @@ const ModalNewActividad = () => {
 
                         <DialogActions>
                             <Grid container justifyContent="space-between">
-                                <Button onClick={() => closeOpenNewActivity()} color="error" variant="contained">
+                                <Button onClick={() => setCloseEditActivity()} color="error" variant="contained">
                                     Cancelar
                                 </Button>
                                 <Button type="submit" color="success" variant="contained">
-                                    Guardar
+                                    Guardar Cambios
                                 </Button>
                             </Grid>
                         </DialogActions>
@@ -95,4 +103,4 @@ const ModalNewActividad = () => {
     );
 };
 
-export default ModalNewActividad;
+export default ModalEditActivity;

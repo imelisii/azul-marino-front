@@ -21,48 +21,18 @@ const ModalNewSocio = () => {
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
                             newSocioQuery.mutate({
-                                nombre: values.nombre,
-                                apellido: values.apellido,
-                                fecha_nacimiento: values.fecha_nacimiento,
-                                celular: values.celular,
-                                dni: values.dni,
+                                ...values
                             })
                         }}
                     >
                         {({ values, setFieldValue }) => {
-
                             return (
                                 <Form>
                                     <DialogTitle>Crear Socio Nuevo</DialogTitle>
                                     <DialogContent dividers>
-                                        <FormControl fullWidth margin="normal">
-                                            <Field
-                                                as={TextField}
-                                                labelId="actividad-label"
-                                                name="nombre"
-                                                value={values.nombre}
-                                                label="Nombre"
-                                               
-                                              
-                                               
+                                        {/* Número de socio */}
 
-                                            >
-                                            </Field>
-                                            <ErrorMessage name="nombre" component="div" className="text-red-500" />
-                                        </FormControl>
-
-
-                                        <FormControl fullWidth margin="normal">
-                                            <Field
-                                                as={TextField}
-                                                name="apellido"
-                                                value={values.apellido}
-                                                label="apellido"
-                                            />
-                                            <ErrorMessage name="apellido" component="div" className="text-red-500" />
-                                        </FormControl>
-
-
+                                        {/* Dni */}
                                         <FormControl fullWidth margin="normal">
                                             <Field
                                                 as={TextField}
@@ -70,13 +40,30 @@ const ModalNewSocio = () => {
                                                 name="dni"
                                                 value={values.dni}
                                                 type="number"
-                                            >
-                                            </Field>
+                                            />
                                             <ErrorMessage name="dni" component="div" className="text-red-500" />
                                         </FormControl>
-
-
-
+                                        {/* Apellido */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="apellido"
+                                                value={values.apellido}
+                                                label="Apellido"
+                                            />
+                                            <ErrorMessage name="apellido" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Nombre */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="nombre"
+                                                value={values.nombre}
+                                                label="Nombre"
+                                            />
+                                            <ErrorMessage name="nombre" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Fecha nacimiento */}
                                         <FormControl fullWidth margin="normal">
                                             <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
                                                 <FormControl fullWidth margin="normal">
@@ -85,26 +72,102 @@ const ModalNewSocio = () => {
                                                         value={values.fecha_nacimiento}
                                                         onChange={(val) => setFieldValue("fecha_nacimiento", val)}
                                                         format="dd/MM/yyyy"
-
                                                     />
-
                                                 </FormControl>
                                             </LocalizationProvider>
                                         </FormControl>
+                                        {/* Dirección */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="direccion"
+                                                value={values.direccion}
+                                                label="Dirección"
+                                            />
+                                            <ErrorMessage name="direccion" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Localidad */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="localidad"
+                                                value={values.localidad}
+                                                label="Localidad"
+                                            />
+                                            <ErrorMessage name="localidad" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Teléfono */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="telefono"
+                                                value={values.telefono}
+                                                label="Teléfono"
+                                            />
+                                            <ErrorMessage name="telefono" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Madre */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="madre"
+                                                value={values.madre}
+                                                label="Madre"
+                                            />
+                                            <ErrorMessage name="madre" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Teléfono Madre */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="telefono_madre"
+                                                value={values.telefono_madre}
+                                                label="Teléfono Madre"
+                                            />
+                                            <ErrorMessage name="telefono_madre" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Padre */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="padre"
+                                                value={values.padre}
+                                                label="Padre"
+                                            />
+                                            <ErrorMessage name="padre" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Teléfono Padre */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="telefono_padre"
+                                                value={values.telefono_padre}
+                                                label="Teléfono Padre"
+                                            />
+                                            <ErrorMessage name="telefono_padre" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Mail */}
+                                        <FormControl fullWidth margin="normal">
+                                            <Field
+                                                as={TextField}
+                                                name="mail"
+                                                value={values.mail}
+                                                label="Mail"
+                                            />
+                                            <ErrorMessage name="mail" component="div" className="text-red-500" />
+                                        </FormControl>
+                                        {/* Celular */}
                                         <FormControl fullWidth margin="normal">
                                             <Field
                                                 type="number"
                                                 as={TextField}
-                                                labelId="metodoPago-label"
                                                 name="celular"
                                                 value={values.celular}
-                                                label="celular"
+                                                label="Celular"
                                             >
                                             </Field>
                                             <ErrorMessage name="celular" component="div" className="text-red-500" />
                                         </FormControl>
-
-
 
                                     </DialogContent>
 

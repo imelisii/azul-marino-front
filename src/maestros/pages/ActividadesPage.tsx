@@ -3,10 +3,16 @@ import useMaestrosActividades from '../hooks/useMaestrosActividades';
 import { Button } from '@mui/material';
 import { useMaestroSotre } from '../../store/maestros-store';
 import ModalNewActividad from '../components/ModalNewActivity';
+import ModalEditActivity from '../components/ModalEditActivity';
 
 const ActividadesPage = () => {
     const { actividadesQuery, columns } = useMaestrosActividades()
     const openNewActivity = useMaestroSotre(state => state.setOpenNewActivity)
+    const selectedActivity = useMaestroSotre(state => state.activityMaestrosSelected)
+   
+
+
+    
 
     return (
         <div>
@@ -16,7 +22,7 @@ const ActividadesPage = () => {
                     <Button variant='contained'
                         color='success'
                         onClick={() => openNewActivity(true)}>
-                            
+
                         Crear Actividad
                     </Button></div>
             </div>
@@ -24,7 +30,8 @@ const ActividadesPage = () => {
                 <DataGrid
                     rows={actividadesQuery.data ?? []} columns={columns} />
             </div>
-            <ModalNewActividad/>
+            <ModalNewActividad />
+            <ModalEditActivity  id={selectedActivity?.id!} />
         </div>
     )
 }
