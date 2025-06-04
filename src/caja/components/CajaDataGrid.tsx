@@ -5,6 +5,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { es } from 'date-fns/locale';
 import CustomDatePicker from "../../shared/DatePicker/CustomDatePicker";
 import useCajaGrid from "../hooks/useCajaGrid";
+import toast from "react-hot-toast";
+import { data } from "react-router";
 
 
 
@@ -12,10 +14,10 @@ const CajaDataGrid = () => {
 
     const { cajaQuery, columns, fechaDesde, fechaHasta, handleBuscar, handleLimpiar, setFechaDesde, setFechaHasta } = useCajaGrid();
 
-   
+  
 
-    if (cajaQuery.isError) {
-        return <Box justifyContent={"center"} alignContent={"center"} color="error.main">Error al cargar los datos de la caja.</Box>;
+    if (cajaQuery.isError && cajaQuery.error.message.includes("403")) {
+        toast.error(`Falta de permisos para acceder a la caja`);
     }
 
     return (
