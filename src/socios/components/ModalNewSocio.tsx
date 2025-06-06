@@ -21,7 +21,8 @@ const ModalNewSocio = () => {
                         validationSchema={validationSchema}
                         onSubmit={(values) => {
                             newSocioQuery.mutate({
-                                ...values
+                                ...values,
+                                familiar: "0",
                             })
                         }}
                     >

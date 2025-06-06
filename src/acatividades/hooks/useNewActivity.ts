@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Actividad, NewActivity } from "../../shared/interfaces/actividades/actividades.interface"
+import {  NewActivity } from "../../shared/interfaces/actividades/actividades.interface"
 import { createActividad } from "../services/create-actividad"
 import toast from "react-hot-toast"
 import { AxiosError } from "axios"
