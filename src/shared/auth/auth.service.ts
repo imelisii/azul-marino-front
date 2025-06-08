@@ -11,10 +11,8 @@ export class AuthService {
             return data
         } catch (e) {
             if (e instanceof AxiosError) {
-                console.log(e.response?.data)
                 throw new Error(e.response?.data)
             }
-            console.log(e)
             throw new Error(e as any)
         }
     }

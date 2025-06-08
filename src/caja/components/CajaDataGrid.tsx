@@ -6,19 +6,29 @@ import { es } from 'date-fns/locale';
 import CustomDatePicker from "../../shared/DatePicker/CustomDatePicker";
 import useCajaGrid from "../hooks/useCajaGrid";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { useAuthStore } from "../../store/auth/auth.store";
 
 
 
 
 const CajaDataGrid = () => {
+    const logout = useAuthStore(state => state.logout);
 
     const { cajaQuery, columns, fechaDesde, fechaHasta, handleBuscar, handleLimpiar, setFechaDesde, setFechaHasta } = useCajaGrid();
 
   
 
-    if (cajaQuery.isError && cajaQuery.error.message.includes("403")) {
+    if (cajaQuery.isError && cajaQuery.error.message.includes("403") || cajaQuery.error?.message.includes("401")) {
         toast.error(`Falta de permisos para acceder a la caja`);
     }
+
+
+    useEffect(() => {
+        return () => {
+            logout();
+        }
+    }, []);
 
     return (
         <Box sx={{ height: "90vh", width: "100%" }}>
